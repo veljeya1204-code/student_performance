@@ -1,0 +1,23 @@
+Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=120405
+
+# DB_HOST = "localhost"
+# DB_NAME = "student_performance"
+# DB_USER = "postgres"
+# DB_PASSWORD = "120405"
+# DB_PORT = "5432"
+
+# JWT Configuration
+JWT_SECRET_KEY="310b99b63e8fba9e28470b8e9a35ecc4a8c65d1a39c96b8113c7854758333e5a"
+JWT_ACCESS_TOKEN_EXPIRES=360000
+
+# Flask Configuration
+FLASK_ENV=development
+FLASK_APP=app.py
+SECRET_KEY="fc1117268ccf5a491fe0b90601767d9ff172b16f98e72760135fca150c478bc"
+
+REACT_APP_API_URL=http://localhost:5000/api
