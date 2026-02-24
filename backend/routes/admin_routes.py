@@ -193,6 +193,37 @@ def get_teachers():
     teachers = db.execute_query(query)
     return safe_jsonify(teachers)
 
+
+@admin_bp.route('/teachers/<int:teacher_id>', methods=['PUT'])
+@jwt_required()
+def update_teacher(teacher_id):
+    data = request.get_json()
+
+    query = """
+        UPDATE teachers SET
+            first_name = %s,
+            last_name = %s,
+            phone = %s,
+            qualification = %s,
+            department = %s,
+            hire_date = %s
+        WHERE id = %s
+    """
+
+    success = db.execute_query(query, (
+        data.get('first_name'),
+        data.get('last_name'),
+        data.get('phone'),
+        data.get('qualification'),
+        data.get('department'),
+        data.get('hire_date'),
+        teacher_id
+    ), fetch=False)
+
+    if success:
+        return jsonify({"message": "Teacher updated successfully"}), 200
+
+    return jsonify({"error": "Update failed"}), 500
 @admin_bp.route('/teachers', methods=['POST'])
 @jwt_required()
 # @role_required(['admin'])
@@ -303,6 +334,32 @@ def create_parent():
         return jsonify({'message': 'Parent created', 'id': parent_id}), 201
     return jsonify({'error': 'Failed to create parent'}), 500
 
+@admin_bp.route('/parents/<int:parent_id>', methods=['PUT'])
+@jwt_required()
+def update_parent(parent_id):
+    data = request.get_json()
+
+    query = """
+        UPDATE parents SET
+            first_name = %s,
+            last_name = %s,
+            phone = %s
+        WHERE id = %s
+    """
+
+    success = db.execute_query(query, (
+        data.get('first_name'),
+        data.get('last_name'),
+        data.get('phone'),
+        parent_id
+    ), fetch=False)
+
+    if success:
+        return jsonify({"message": "Parent updated successfully"}), 200
+
+    return jsonify({"error": "Update failed"}), 500
+
+
 # ============= CLASS MANAGEMENT =============
 
 @admin_bp.route('/classes', methods=['GET'])
@@ -349,7 +406,28 @@ def get_classes():
 #     if class_id:
 #         return jsonify({'message': 'Class created', 'id': class_id}), 201
 #     return jsonify({'error': 'Failed to create class'}), 500
+@admin_bp.route('/classes/<int:class_id>', methods=['PUT'])
+@jwt_required()
+def update_class(class_id):
+    data = request.get_json()
 
+    query = """
+        UPDATE classes SET
+            class_name = %s,
+            section = %s
+        WHERE id = %s
+    """
+
+    success = db.execute_query(query, (
+        data.get('class_name'),
+        data.get('section'),
+        class_id
+    ), fetch=False)
+
+    if success:
+        return jsonify({"message": "Class updated successfully"}), 200
+
+    return jsonify({"error": "Update failed"}), 500
 @admin_bp.route('/classes', methods=['POST'])
 @jwt_required()
 def create_class():
