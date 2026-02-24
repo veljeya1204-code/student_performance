@@ -24,7 +24,8 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 # app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(seconds=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 3600000)))
 # Initialize extensions
 jwt = JWTManager(app)
-CORS(app, origins=["http://localhost:3000"])  # Your React URL
+# CORS(app, origins=["http://localhost:3000"])  # Your React URL
+CORS(app, origins=["https://student-performance-blue.vercel.app"])
 # CORS(
 #     app,
 #     supports_credentials=True,
