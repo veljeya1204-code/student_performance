@@ -30,13 +30,39 @@ class Database:
     def connect(self):
         """Establish database connection"""
         try:
-            self.connection = psycopg2.connect(
-                host="localhost",
-                database="postgres",
-                user="postgres",
-                password="120405",
-                port="5432"
-            )
+            # Production: Use Render DATABASE_URL
+            # db_url = os.getenv('DATABASE_URL')
+            db_url="postgresql://jai:M2MxUxO6ytDTtjrSIXINhYgBzff0ppQA@dpg-d6f7rpngi27c73cok0m0-a.oregon-postgres.render.com/student_performance_0ixx"
+            if db_url:
+                # Parse full URL: postgresql://user:pass@host:port/db
+                result = urlparse(db_url)
+                self.connection = psycopg2.connect(
+                    host=result.hostname,
+                    port=result.port,
+                    database=result.path[1:],  # Remove leading /
+                    user=result.username,
+                    password=result.password,
+                    sslmode='require'  # Render SSL required
+                )
+            else:
+                # Local fallback
+                self.connection = psycopg2.connect(
+                    host=os.getenv('DB_HOST', 'localhost'),
+                    database=os.getenv('DB_NAME', 'postgres'),
+                    user=os.getenv('DB_USER', 'postgres'),
+                    password=os.getenv('DB_PASSWORD', '120405'),
+                    port=os.getenv('DB_PORT', '5432')
+                )
+        
+        
+        # try:
+        #     self.connection = psycopg2.connect(
+        #         host="localhost",
+        #         database="postgres",
+        #         user="postgres",
+        #         password="120405",
+        #         port="5432"
+        #     )
 
             self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
             print("✅ Database connected successfully")
