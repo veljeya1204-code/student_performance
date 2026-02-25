@@ -1,5 +1,13 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+  "builds": [
+    { "src": "frontend/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
+    { "src": "api/app.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "api/app.py" },
+    { "src": "/(.*)", "dest": "frontend/dist/$1" }
+  ],
+  "env": {
+    "DATABASE_URL": "postgresql://jai:M2MxUxO6ytDTtjrSIXINhYgBzff0ppQA@dpg-d6f7rpngi27c73cok0m0-a.oregon-postgres.render.com/student_performance_0ixx"  # Vercel env vars
+  }
 }
