@@ -33,7 +33,7 @@ class Database:
         try:
             # Production: Use Render DATABASE_URL
             # db_url = os.getenv('DATABASE_URL')
-            db_url="postgresql://jai:M2MxUxO6ytDTtjrSIXINhYgBzff0ppQA@dpg-d6f7rpngi27c73cok0m0-a.oregon-postgres.render.com/student_performance_0ixx"
+            db_url="postgresql://student_pjfv_user:YRaedEtqbWv3zqt4zMaACaXpIiQxeMUH@dpg-d7ggfcl8nd3s73e0cr7g-a.ohio-postgres.render.com/student_pjfv"
             if db_url:
                 # Parse full URL: postgresql://user:pass@host:port/db
                 result = urlparse(db_url)
